@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+    <!-- This template allows you to create a SIMPLE 6DOF webXR enviroment with a single .glb file and a equirectanglar image for the sky. By gregory vershbow, made with resources from three.js a-frame.io and silverslade -->
+    <!-- If exporting from blender be sure to merge all animation tracks -->
+    <!-- Creative Commons -->
+    
+    <head>
+        <title>WebXR Application</title>
+        <link rel="icon" type="image/png" href="favicon.ico"/>
+        <meta name="description" content="3D Application">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script>               <script type="text/javascript" src="js/webxr.js"></script>
+        <script type="text/javascript" src="js/camera-cube-env.js"></script>
+        <script type="text/javascript" src="js/animation-mixer.js"></script>
+        <script type="text/javascript" src="js/hand-controls.js"></script>
+
+        
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body onload="init();">
+        <a-scene renderer="colorManagement: true;">
+            
+          <!-- Assets  the scr= for "MainMesh" and "sky" can be updated with your own files-->
+            <a-assets>
+				<a-asset-item id="MainMesh"   src="https://files.catbox.moe/y38obf.glb"></a-asset-item>
+                <a-asset-item id="Mesh1"   src="--Your link here--"></a-asset-item>
+                <a-asset-item id="Mesh2"   src="--Your link here--"></a-asset-item>
+                <a-asset-item id="Mesh3"   src="--Your link here--"></a-asset-item>
+                <a-asset-item id="Mesh4"   src="--Your link here--"></a-asset-item>
+                <a-asset-item id="Mesh5"   src="--Your link here--"></a-asset-item>
+                <a-asset-item id="navmesh" src="https://files.catbox.moe/92jrvf.glb"></a-asset-item>  
+                <img id="sky"                 src="./assets/sky.jpg">
+                <img id="icon-play"           src="./resources/play.png">
+                <img id="icon-pause"          src="./resources/pause.png">
+                <img id="icon-play-skip-back" src="./resources/play-skip-back.png">
+                <img id="icon-mute"           src="./resources/mute.png">
+                <img id="icon-volume-low"     src="./resources/volume-low.png">
+                <img id="icon-volume-high"    src="./resources/volume-high.png">
+            </a-assets>
+
+            <!-- Entities -->
+            <!-- Note for reflections: To change rflections Repalace "g_cube" with "soft_city","soft_landscape" or "soft_room"-->
+            
+			<a-entity id="#MainMesh" animation-mixer="clip: *; loop: forever; clampWhenFinished: true;" gltf-model="#MainMesh" 
+            scale="1 1 1" position= "0 0 0" visible="true" 
+            shadow="cast: true" geometry="" cube-env-map="path: /env/g_cube/; extension: jpg; reflectivity: 0.99;"></a-entity>
+            
+            <a-entity id="#Mesh1" animation-mixer="clip: *; loop: forever; clampWhenFinished: true;" gltf-model="#MainMesh" 
+            scale="1 1 1" position= "0 0 0" visible="true" 
+            shadow="cast: true" geometry="" cube-env-map="path: /env/g_cube/; extension: jpg; reflectivity: 0.99;"></a-entity>
+
+            <a-entity id="#Mesh2" animation-mixer="clip: *; loop: forever; clampWhenFinished: true;" gltf-model="#MainMesh" 
+            scale="1 1 1" position= "0 0 0" visible="true" 
+            shadow="cast: true" geometry="" cube-env-map="path: /env/g_cube/; extension: jpg; reflectivity: 0.99;"></a-entity>
+
+            <a-entity id="#Mesh3" animation-mixer="clip: *; loop: forever; clampWhenFinished: true;" gltf-model="#MainMesh" 
+            scale="1 1 1" position= "0 0 0" visible="true" 
+            shadow="cast: true" geometry="" cube-env-map="path: /env/g_cube/; extension: jpg; reflectivity: 0.99;"></a-entity>
+
+            <a-entity id="#Mesh4" animation-mixer="clip: *; loop: forever; clampWhenFinished: true;" gltf-model="#MainMesh" 
+            scale="1 1 1" position= "0 0 0" visible="true" 
+            shadow="cast: true" geometry="" cube-env-map="path: /env/g_cube/; extension: jpg; reflectivity: 0.99;"></a-entity>
+
+            <a-entity id="#Mesh5" animation-mixer="clip: *; loop: forever; clampWhenFinished: true;" gltf-model="#MainMesh" 
+            scale="1 1 1" position= "0 0 0" visible="true" 
+            shadow="cast: true" geometry="" cube-env-map="path: /env/g_cube/; extension: jpg; reflectivity: 0.99;"></a-entity>
+            
+            <a-entity id="Navmesh" nav-mesh gltf-model="#navmesh" visible="false"></a-entity>
+                      
+      <!-- Camera AKA PLAYER-->
+           
+                <a-entity id="player" movement-controls="constrainToNavMesh: true;" navigator="cameraRig: #cameraRig; cameraHead: #head; collisionEntities: .collision; ignoreEntities: .clickable" position="0 0 0" rotation="0 0 0">
+        <!-- camera -->
+        <a-entity id="head" camera="active: true" position="0 1 0" look-controls="pointerLockEnabled: true; reverseMouseDrag: true" ></a-entity>
+              <!-- Left Controller -->
+              <a-entity id="leftHand" hand-controls="hand: left; handModelStyle: lowPoly; color: #15ACCF" teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 18; landingMaxAngle: 60" visible="true"></a-entity>
+              <!-- Right Controller -->
+              <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: lowPoly; color: #15ACCF" laser-controls raycaster="showLine: true; far: 10; interval: 0; objects: .clickable, a-link;" line="color: #7cfc00; opacity: 0.5" visible="true"></a-entity>
+      </a-entity>
+      
+
+            <!-- Lights -->
+            <a-entity light="intensity: 1.0; castShadow: true; shadowBias: -0.001; shadowCameraFar: 501.02; shadowCameraBottom: 12; shadowCameraFov: 101.79; shadowCameraNear: 0; shadowCameraTop: -5; shadowCameraRight: 10; shadowCameraLeft: -10; shadowRadius: 2" position="1.36586 7.17965 1"></a-entity>
+			<a-entity light="type: ambient; intensity: 1.0"></a-entity>
+        
+
+            <!-- Sky -->
+            <a-sky src="#sky" material="" geometry="" rotation="0 90 0"></a-sky>
+        </a-scene>
+    </body>
+</html>
